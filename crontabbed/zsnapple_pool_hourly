@@ -1,0 +1,1 @@
+0 * * * * zsnapple -f short -l 24 -r -v pool -q
