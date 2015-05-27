@@ -26,11 +26,23 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150526-231020
+SCRIPTVERSION=150527-010855
 
 OUTDIR=~/crontabbed
 
 OUTFILE=.crontab.`date -u +%y%m%d-%H%M%S`
+
+if [ "x" != "x${OUTDIR}" ] && [ ! -d ${OUTDIR} ]; then
+    NEWDATASET=`zfs list | grep -o '^[[:alnum:]]*/root/bin' | sed 's/bin/crontabbed/'`
+    if [ "x" != "x${NEWDATASET}" ]; then
+        zfs create ${NEWDATASET}
+    else
+        install -d -m 700 ${OUTDIR}
+    fi
+    if            [ -d ~/git/crontabbed/root.crontabbed ]; then
+        install -m 600 ~/git/crontabbed/root.crontabbed/* ${OUTDIR}/
+    fi
+fi
 
 if [ "x" != "x${OUTDIR}" ] && [ -d ${OUTDIR} ]; then
 
