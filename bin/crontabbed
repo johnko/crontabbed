@@ -26,7 +26,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150811-063540
+SCRIPTVERSION=150811-064941
 
 OUTDIR=~/crontabbed
 
@@ -50,6 +50,16 @@ if [ "x" != "x${OUTDIR}" ] && [ ! -d ${OUTDIR} ]; then
     if [ "0" == "${MYUID}" ]; then
         if            [ -d ~/git/crontabbed/root.crontabbed ]; then
             install -m 600 ~/git/crontabbed/root.crontabbed/* ${OUTDIR}/
+        fi
+    fi
+    if [ "1001" == "${MYUID}" ] && [ "1001" == "`id -u urep`" ]; then
+        if            [ -d ~/git/crontabbed/urep.crontabbed ]; then
+            install -m 600 ~/git/crontabbed/urep.crontabbed/* ${OUTDIR}/
+        fi
+    fi
+    if [ "1022" == "${MYUID}" ] && [ "1001" == "`id -u _sshtunl`" ]; then
+        if            [ -d ~/git/crontabbed/_sshtunl.crontabbed ]; then
+            install -m 600 ~/git/crontabbed/_sshtunl.crontabbed/* ${OUTDIR}/
         fi
     fi
 fi
