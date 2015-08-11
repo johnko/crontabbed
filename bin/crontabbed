@@ -26,21 +26,31 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150527-010855
+SCRIPTVERSION=150811-063540
 
 OUTDIR=~/crontabbed
 
 OUTFILE=.crontab.`date -u +%y%m%d-%H%M%S`
 
+MYUID=`id -u`
+
 if [ "x" != "x${OUTDIR}" ] && [ ! -d ${OUTDIR} ]; then
-    NEWDATASET=`zfs list | grep -o '^[[:alnum:]]*/root/bin' | sed 's/bin/crontabbed/'`
-    if [ "x" != "x${NEWDATASET}" ]; then
-        zfs create ${NEWDATASET}
-    else
+    # are you root?
+    if [ "0" == "${MYUID}" ]; then
+        NEWDATASET=`zfs list | grep -o '^[[:alnum:]]*/root/bin' | sed 's/bin/crontabbed/'`
+        if [ "x" != "x${NEWDATASET}" ]; then
+            zfs create ${NEWDATASET}
+        fi
+    fi
+    # may need to create outdir as normal user
+    if [ ! -d ${OUTDIR} ]; then
         install -d -m 700 ${OUTDIR}
     fi
-    if            [ -d ~/git/crontabbed/root.crontabbed ]; then
-        install -m 600 ~/git/crontabbed/root.crontabbed/* ${OUTDIR}/
+    # are you root?
+    if [ "0" == "${MYUID}" ]; then
+        if            [ -d ~/git/crontabbed/root.crontabbed ]; then
+            install -m 600 ~/git/crontabbed/root.crontabbed/* ${OUTDIR}/
+        fi
     fi
 fi
 
