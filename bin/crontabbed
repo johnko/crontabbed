@@ -52,12 +52,14 @@ if [ "x" != "x${OUTDIR}" ] && [ ! -d ${OUTDIR} ]; then
             install -m 600 ~/git/crontabbed/root.crontabbed/* ${OUTDIR}/
         fi
     fi
-    if [ "1001" == "${MYUID}" ] && [ "1001" == "`id -u urep`" ]; then
+    if  [ "1001" == "${MYUID}" ] && \
+        [ "1001" == "`id -u urep`" ]; then
         if            [ -d ~/git/crontabbed/urep.crontabbed ]; then
             install -m 600 ~/git/crontabbed/urep.crontabbed/* ${OUTDIR}/
         fi
     fi
-    if [ "1022" == "${MYUID}" ] && [ "1001" == "`id -u _sshtunl`" ]; then
+    if  [ "1022" == "${MYUID}" ] && \
+        [ "1022" == "`id -u _sshtunl`" ]; then
         if            [ -d ~/git/crontabbed/_sshtunl.crontabbed ]; then
             install -m 600 ~/git/crontabbed/_sshtunl.crontabbed/* ${OUTDIR}/
         fi
