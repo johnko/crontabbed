@@ -1,32 +1,4 @@
 #!/bin/sh
-# Copyright (c) 2015, John Ko
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions are met:
-#
-# * Redistributions of source code must retain the above copyright notice, this
-#   list of conditions and the following disclaimer.
-#
-# * Redistributions in binary form must reproduce the above copyright notice,
-#   this list of conditions and the following disclaimer in the documentation
-#   and/or other materials provided with the distribution.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-######################################################################
-# Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
-######################################################################
-SCRIPTVERSION=150811-064941
 
 OUTDIR=~/crontabbed
 
@@ -49,19 +21,19 @@ if [ "x" != "x${OUTDIR}" ] && [ ! -d ${OUTDIR} ]; then
     # are you root?
     if [ "0" == "${MYUID}" ]; then
         if            [ -d ~/git/crontabbed/root.crontabbed ]; then
-            install -m 600 ~/git/crontabbed/root.crontabbed/* ${OUTDIR}/
+            install -C -m 600 ~/git/crontabbed/root.crontabbed/* ${OUTDIR}/
         fi
     fi
     if  [ "1001" == "${MYUID}" ] && \
         [ "1001" == "`id -u urep`" ]; then
         if            [ -d ~/git/crontabbed/urep.crontabbed ]; then
-            install -m 600 ~/git/crontabbed/urep.crontabbed/* ${OUTDIR}/
+            install -C -m 600 ~/git/crontabbed/urep.crontabbed/* ${OUTDIR}/
         fi
     fi
     if  [ "1022" == "${MYUID}" ] && \
         [ "1022" == "`id -u _sshtunl`" ]; then
         if            [ -d ~/git/crontabbed/_sshtunl.crontabbed ]; then
-            install -m 600 ~/git/crontabbed/_sshtunl.crontabbed/* ${OUTDIR}/
+            install -C -m 600 ~/git/crontabbed/_sshtunl.crontabbed/* ${OUTDIR}/
         fi
     fi
 fi
