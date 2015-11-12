@@ -4,6 +4,8 @@ OUTDIR=~/crontabbed
 
 OUTFILE=.crontab.`date -u +%y%m%d-%H%M%S`
 
+CURRENTCRON=.tmp
+
 MYUID=`id -u`
 
 if [ "x" != "x${OUTDIR}" ] && [ ! -d ${OUTDIR} ]; then
@@ -43,8 +45,12 @@ if [ "x" != "x${OUTDIR}" ] && [ -d ${OUTDIR} ]; then
     # this ignores dot files like .test or .todo
     cat ${OUTDIR}/* > ${OUTDIR}/${OUTFILE}
 
+    crontab -l > ${OUTDIR}/${CURRENTCRON}
+
     if [ -f ${OUTDIR}/${OUTFILE} ]; then
-        crontab ${OUTDIR}/${OUTFILE}
+        if [ ! -f ${OUTDIR}/${CURRENTCRON} ] || ! diff ${OUTDIR}/${OUTFILE} ${OUTDIR}/${CURRENTCRON} ; then
+            crontab ${OUTDIR}/${OUTFILE}
+        fi
     fi
 
 fi
