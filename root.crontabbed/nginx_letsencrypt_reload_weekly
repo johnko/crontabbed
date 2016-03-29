@@ -1,1 +1,0 @@
-1 1 * * 1 deploy_nginx_letsencrypt_reload >>/var/log/nginx-letsencrypt-cronjob.log
